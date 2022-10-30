@@ -2,11 +2,14 @@ import App from './app';
 import dotenv from 'dotenv';
 import connectDB from './db/connection';
 import os from 'os';
+import log from './utils/logger';
+import config from '.././config/default';
+dotenv.config();
 
-const port = process.env.PORT;
+
+const port = config.port;
 const cpu = os.cpus().length;
 
-dotenv.config();
 
 const startAtlas = async() => {
     try {
@@ -17,9 +20,8 @@ const startAtlas = async() => {
     }
 }
 
-App.listen(port , () => {
-    console.log(`RUNNING IN ${port}`);
-    console.log(`PLAY WITH ${cpu} CORES`);
-
-    startAtlas();
+App.listen(port, () => {
+    log.info(`RUNNING IN ${port}`);
+    log.info(`PLAY WITH ${cpu} CORES`);
+ 
 })
