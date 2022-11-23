@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.30.2",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.6",
@@ -23,6 +24,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@typegoose/typegoose": "^9.13.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
