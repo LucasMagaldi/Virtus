@@ -1,5 +1,5 @@
 import { getModelForClass, modelOptions, prop, Severity, pre, DocumentType } from  "@typegoose/typegoose";
-import { nanoid } from "nanoid";
+import nanoid  from "nanoid";
 import  argon2 from "argon2";
 import log from "../utils/logger";
 

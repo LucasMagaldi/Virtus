@@ -13,7 +13,7 @@ const cpu = os.cpus().length;
 
 const startAtlas = async() => {
     try {
-        await connectDB(12);
+        await connectDB(config.dbUrl);
     } catch (error) {
         console.log(error);
         process.exit(1);
@@ -21,6 +21,7 @@ const startAtlas = async() => {
 }
 
 App.listen(port, () => {
+    startAtlas();
     log.info(`RUNNING IN ${port}`);
     log.info(`PLAY WITH ${cpu} CORES`);
  

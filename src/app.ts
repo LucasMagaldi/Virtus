@@ -6,7 +6,12 @@ class App {
 
     constructor() {
         this.server = express();
+        this.AllowJson();
         routes(this.server);
+    }
+
+    AllowJson():void {
+        this.server.use(express.json());
     }
 }
 
