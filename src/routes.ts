@@ -1,6 +1,6 @@
 import { Router, Express, Request, Response } from "express";
 import validateResource from "./middlewares/validateResources";
-import { createUserSchema } from "./schemas/userSchema";
+import { createUserSchema, verifyUserSchema } from "./schemas/userSchema";
 
 import userController from "./controllers/userController";
 
@@ -10,6 +10,7 @@ function routes(app: Express) {
     });
 
     app.post("/api/users", validateResource(createUserSchema), userController.createUser)
+    app.get("/api/users/verify/:id/:verificationCode", validateResource(verifyUserSchema), userController.verifyUser);
 }
 
 export default routes;

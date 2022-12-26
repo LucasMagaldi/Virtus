@@ -6,6 +6,10 @@ class UserService {
         return UserModel.create(input);
     }
 
+    async findUserById(id: string) {
+        return UserModel.findById(id)
+    }
+
 }
 
 export default new UserService();

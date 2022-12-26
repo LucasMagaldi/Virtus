@@ -36,7 +36,7 @@ export class User {
     @prop({ required: true})
     password: string;
 
-    @prop({ required: true, default: () => nanoid()})
+    @prop({ required: true, default: () => (Math.ceil(Math.random() * 100000))})
     verificationCode: string;
 
     @prop()
