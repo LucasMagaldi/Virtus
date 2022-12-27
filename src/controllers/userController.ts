@@ -1,8 +1,8 @@
 import { Response, Request } from "express";
-import { CreateUserInput, VerifyUserInput } from "../schemas/userSchema";
+import { CreateUserInput, VerifyUserInput, forgetPasswordInput } from "../schemas/userSchema";
 import sendEmail from "../utils/mailer";
 import UserService from "../services/userService";
-import { User } from "../models/User";
+
 
 class UserController {
 
@@ -29,7 +29,6 @@ class UserController {
 
     async verifyUser(req: Request<VerifyUserInput>, res: Response) {
         try {
-            console.log(req)
             const { id, verificationCode } = req.params;
             const user = await UserService.findUserById(id)
 
@@ -57,6 +56,44 @@ class UserController {
             console.log(error);
             return res.send(error)
         }
+    }
+    
+    async forgetPassword(req: Request<{}, {}, forgetPasswordInput>, res: Response) {
+        let message = "Password reset code will be send to registered email address"
+        try {
+            const {email} = req.body;
+            const user = await UserService.findUserByEmail(email);
+
+            if(!user) {
+                return res.status(400).json({
+                    content: message
+                })
+            }
+
+            if(!user.verified) {
+                return res.status(403).json({
+                    content: "You are not verified yet"
+                })
+            }
+            const passwordCode = Math.ceil(Math.random() * 100000);
+            user.passwordResetCode = passwordCode.toString();
+            
+            await user.save();
+            await sendEmail({
+                to: user.email,
+                from: "lucas.magaldi@hotmail.com",
+                subject: "Reset your password",
+                text: `Password reset code: ${passwordCode}. Id ${user._id}`,
+            });
+            return res.status(200).json({
+                content: message
+            });
+        } catch (error) {
+            message = ""
+            res.status(409).json({
+                content: message
+            });
+        }      
     }
 
 }

@@ -10,6 +10,10 @@ class UserService {
         return UserModel.findById(id)
     }
 
+    async findUserByEmail(email: string) {
+        return UserModel.findOne({email});
+    }
+
 }
 
 export default new UserService();
